@@ -1,0 +1,24 @@
+{
+  "Inf 1 - 7.A (Matematika) - Domácí úkol - 0": [
+    {
+      "description": "Popis zadáné práce"
+    },
+    {
+      "due": "do 13. 9., 10:00"
+    },
+    {
+      "teacher": "Jan Novák"
+    }
+  ],
+  "Inf 1 - 7.A (Informatika) - Domácí úkol - 1": [
+    {
+      "description": "Zadání"
+    },
+    {
+      "due": "do 13. 9., 10:00"
+    },
+    {
+      "teacher": "Jana Nováková"
+    }
+  ]
+}
