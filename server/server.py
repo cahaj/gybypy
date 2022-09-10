@@ -1,3 +1,2 @@
-import scraper
-
-scraper.login()
+import socket
+import threading
