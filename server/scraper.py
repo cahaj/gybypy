@@ -8,7 +8,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import json
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+op = webdriver.ChromeOptions()
+op.add_argument('--headless')
+
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=op)
 driver.get("https://gyby.edookit.net/user/login")
 actions = ActionChains(driver)
 
@@ -36,6 +39,7 @@ def login(access1, access2):
     element.click()
 
     driver.switch_to.window(window_before)
+    print("scraper.py: LOGIN")
 
 def gethw():
     def stringToList(string):
@@ -76,6 +80,9 @@ def gethw():
     with open('homework.json', 'w', encoding='utf-8') as file:
         json.dump(hw, file, indent=2, ensure_ascii=False)
 
+    print("scraper.py: FETCHED HOMEWORK DATA TO homework.json")
+
 def logout():
     driver.find_element(By.ID, "headerAvatarMobile").click()
     driver.find_element(By.CLASS_NAME, "logout").click()
+    print("scraper.py: LOGOUT")
