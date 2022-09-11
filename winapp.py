@@ -29,14 +29,12 @@ def create_event():
             outlook = client.Dispatch("Outlook.Application")
             cal = outlook.CreateItem(1)
             cal.Subject = i
-            cal.Body = hw.get(i)[0]["description"]
-            cal.Start = convertdate(hw.get(i)[1]["due"])
+            cal.Body = hw.get(i)[0]["description"]            
+            cal.Start = convertdate(hw.get(i)[1]["due"]).strftime("%Y-%m-%d %H:%M")
             cal.Duration = 45
             cal.Importance = 2
             cal.Save()
             print(f"Synced {i}")
-
-
 
 if __name__ == '__main__':
     scrape()
