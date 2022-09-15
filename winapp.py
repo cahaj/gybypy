@@ -28,7 +28,9 @@ def create_event():
         for i in hw:
             outlook = client.Dispatch("Outlook.Application")
             cal = outlook.CreateItem(1)
-            cal.Subject = i
+            subj = i[i.index("(") + 1 : ]
+            subj = subj.split(")", 1)[0]
+            cal.Subject = subj
             cal.Body = hw.get(i)[0]["description"]            
             cal.Start = convertdate(hw.get(i)[1]["due"]).strftime("%Y-%m-%d %H:%M")
             cal.Duration = 45
