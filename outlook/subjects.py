@@ -1,0 +1,2 @@
+def validsubj():
+    return ['Anglický jazyk', 'Matematika', 'Informatika', 'Německý jazyk', 'Chemie', 'Fyzika', 'Španělský jazyk', 'Francouzský jazyk', 'Biologie', 'Latinský jazyk', 'Společenské vědy', 'Občanská výchova', 'Hudební výchova', 'Dějepis', 'Tělesná výchova']
