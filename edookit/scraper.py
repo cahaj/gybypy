@@ -8,6 +8,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import json
 
+import os
+os.system('color')
+from termcolor import colored
+
 op = webdriver.ChromeOptions()
 op.add_argument('--headless')
 
@@ -39,7 +43,7 @@ def login(access1, access2):
     element.click()
 
     driver.switch_to.window(window_before)
-    print("scraper.py: LOGIN")
+    print(colored("scraper.py: LOGIN", "green"))
 
 def gethw():
     def stringToList(string):
@@ -80,9 +84,9 @@ def gethw():
     with open('homework.json', 'w', encoding='utf-8') as file:
         json.dump(hw, file, indent=2, ensure_ascii=False)
 
-    print("scraper.py: FETCHED HOMEWORK DATA TO homework.json")
+    print(colored("scraper.py: FETCHED HOMEWORK DATA TO homework.json", "green"))
 
 def logout():
     driver.find_element(By.ID, "headerAvatarMobile").click()
     driver.find_element(By.CLASS_NAME, "logout").click()
-    print("scraper.py: LOGOUT")
+    print(colored("scraper.py: LOGOUT", "green"))

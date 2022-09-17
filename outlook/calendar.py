@@ -4,6 +4,10 @@ from datetime import datetime, date, timedelta
 import time
 import json
 
+import os
+os.system('color')
+from termcolor import colored
+
 def convertdate(due):
     r = ["do ", " ", ",", "\u2009"]
     for i in r:
@@ -40,7 +44,7 @@ def create_event():
         hw = json.load(file)
         for i in hw:
             if hw.get(i)[0]["description"] in fetchcalendar():
-                print(f"calendar.py: {i} already synced")
+                print(colored(f"calendar.py: {i} already synced", "yellow"))
             elif hw.get(i)[0]["description"] not in fetchcalendar():
                 outlook = client.Dispatch("Outlook.Application")
                 cal = outlook.CreateItem(1)
@@ -52,4 +56,4 @@ def create_event():
                 cal.Duration = 45
                 cal.Importance = 2
                 cal.Save()
-                print(f"calendar.py: Synced {i}")
+                print(colored(f"calendar.py: Synced {i}", "green"))
