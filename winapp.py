@@ -23,6 +23,7 @@ def synchw(access1, access2):
 ================================================      
         """, "red"))
         print(e)
+        raise Exception("Internal error. Could be caused by using invalid access codes.")
 
 logins = 'edookit/local_logins.json'
 
@@ -31,14 +32,23 @@ def main():
     json_object = json.load(file)
     file.close()
     if json_object["a1"] == None:
-        access1 = getpass.getpass(prompt="Access code 1: ")
-        access2 = getpass.getpass(prompt="Access code 2: ")
-        json_object["a1"] = access1
-        json_object["a2"] = access2
-        file = open(logins, "w")
-        json.dump(json_object, file)
-        file.close()
-        synchw(access1, access2)
+        try:
+            access1 = getpass.getpass(prompt="Access code 1: ")
+            access2 = getpass.getpass(prompt="Access code 2: ")
+            synchw(access1, access2)
+            json_object["a1"] = access1
+            json_object["a2"] = access2
+            file = open(logins, "w")
+            json.dump(json_object, file)
+            file.close()
+            print(colored("Logins saved", "green"))
+        except Exception as e:
+            json_object["a1"] = None
+            json_object["a2"] = None
+            file = open(logins, "w")
+            json.dump(json_object, file)
+            file.close()
+            print(colored("EXCEPTION:", "red"), e)
     else:
         uselogin = input("Use saved logins? [y/n] ")
         if uselogin == "y":
