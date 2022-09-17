@@ -44,7 +44,7 @@ def create_event():
         hw = json.load(file)
         for i in hw:
             if hw.get(i)[0]["description"] in fetchcalendar():
-                print(colored(f"calendar.py: {i} already synced", "yellow"))
+                print(colored(f"calendar.py:", "cyan"), colored(f"{i} is already synced", "yellow"))
             elif hw.get(i)[0]["description"] not in fetchcalendar():
                 outlook = client.Dispatch("Outlook.Application")
                 cal = outlook.CreateItem(1)
@@ -56,4 +56,4 @@ def create_event():
                 cal.Duration = 45
                 cal.Importance = 2
                 cal.Save()
-                print(colored(f"calendar.py: Synced {i}", "green"))
+                print(colored(f"calendar.py:", "cyan"), colored(f"Synced {i}", "green"))
