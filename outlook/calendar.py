@@ -18,6 +18,14 @@ def convertdate(due):
     date = datetime.strptime(due, '%d/%m/%y %H:%M')
     return date
 
+def subjFormat(i):
+    if "- 5A8 (" in i:
+        subj = i[i.index("(") + 1 : ]
+        subj = subj.split(")", 1)[0]
+        return subj
+    else:
+        return i
+
 def fetchcalendar():
     outlook = client.Dispatch('Outlook.Application').GetNamespace('MAPI')
     calendar = outlook.getDefaultFolder(9).Items
@@ -48,9 +56,7 @@ def create_event():
             elif hw.get(i)[0]["description"] not in fetchcalendar():
                 outlook = client.Dispatch("Outlook.Application")
                 cal = outlook.CreateItem(1)
-                subj = i[i.index("(") + 1 : ]
-                subj = subj.split(")", 1)[0]
-                cal.Subject = subj
+                cal.Subject = subjFormat(i)
                 cal.Body = hw.get(i)[0]["description"]            
                 cal.Start = convertdate(hw.get(i)[1]["due"]).strftime("%Y-%m-%d %H:%M")
                 cal.Duration = 45
