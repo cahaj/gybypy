@@ -23,26 +23,19 @@ def login(access1, access2):
     time.sleep(1)
     element = driver.find_element(By.ID, "plus4ULoginButton")
     element.click()
-    time.sleep(1)
 
-    window_before = driver.window_handles[0]
-    window_after = driver.window_handles[1]
-
-    driver.switch_to.window(window_after)
-    driver.maximize_window()
+    element = driver.find_element(By.ID, "plus4ULoginButton")
+    element.click()
 
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'accessCode1'))).click()
     actions.send_keys(access1).perform()
 
-
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'accessCode2'))).click()
     actions.send_keys(access2).perform()
 
-    time.sleep(1)
     element = driver.find_element(By.XPATH, "/html/body/div/div/div[4]/div/div[1]/div/div/div[2]/div/div[3]/div/div[1]/form/button[1]")
     element.click()
 
-    driver.switch_to.window(window_before)
     print(colored("scraper.py:", "cyan"), "LOGIN")
 
 def gethw():
@@ -67,7 +60,7 @@ def gethw():
     homework_list.remove('Vytvořeno')
 
     hw = {}
-
+    
     due = homework_list[0::7]
     subject = homework_list[2::7]
     for count, x in enumerate(subject):
