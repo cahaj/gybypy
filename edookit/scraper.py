@@ -43,7 +43,6 @@ def gethw():
         listRes = list(string.split("\n"))
         return listRes
 
-    time.sleep(2)
     driver.find_element(By.ID, 'menu-icon').click()
     driver.find_element(By.CLASS_NAME, 'assignments ').click()
     driver.find_element(By.XPATH, '/html/body/div[2]/div/div[5]/ul/li[4]/ul/li[1]/a/span').click()
