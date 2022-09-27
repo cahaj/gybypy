@@ -8,6 +8,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import json
 import os
+from outlook.subjects import validsubj
 
 os.system('color')
 from termcolor import colored
@@ -24,8 +25,7 @@ def login(access1, access2):
     element = driver.find_element(By.ID, "plus4ULoginButton")
     element.click()
 
-    element = driver.find_element(By.ID, "plus4ULoginButton")
-    element.click()
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'plus4ULoginButton'))).click()
 
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'accessCode1'))).click()
     actions.send_keys(access1).perform()
@@ -60,18 +60,28 @@ def gethw():
     homework_list.remove('Vytvořeno')
 
     hw = {}
-    
+
     due = homework_list[0::7]
-    subject = homework_list[2::7]
-    for count, x in enumerate(subject):
-        subject[count] = f"{x} - {count}"
+    subjectRAW = homework_list[1::7]
+    name = homework_list[2::7]
+    for count, x in enumerate(name):
+        name[count] = f"{x} - {count}"
     description = homework_list[3::7]
     teacher = homework_list[5::7]
 
-    for count, i in enumerate(subject):
+    subject = []
+    for i in subjectRAW:
+        for subj in validsubj():
+            if subj in i:
+                subject.append(subj)
+            else:
+                continue
+
+    for count, i in enumerate(name):
         hw[i] = []
         hw[i].append({"description": description[count]})
         hw[i].append({"due": due[count]})
+        hw[i].append({"subject": subject[count]})
         hw[i].append({"teacher": teacher[count]})
 
     with open('homework.json', 'w', encoding='utf-8') as file:

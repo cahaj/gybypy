@@ -1,21 +1,27 @@
 {
-  "Inf 1 - 7.A (Matematika) - Domácí úkol - 0": [
+  "II. legite et describéte - 0": [
     {
-      "description": "Popis zadáné práce"
+      "description": "Přečtěte a shrňte text. Zadání v MS Teams. Je povoleno spolupracovat ve dvojici - pokud tak učiníte, napište, s kým jste pracovali."
     },
     {
-      "due": "do 13. 9., 10:00"
+      "due": "do 29. 9., 23:59"
+    },
+    {
+      "subject": "Latinský jazyk"
     },
     {
       "teacher": "Jan Novák"
     }
   ],
-  "Inf 1 - 7.A (Informatika) - Domácí úkol - 1": [
+  "Fy - 5A8 (Fyzika) - Dobrovolný domácí úkol - 1": [
     {
-      "description": "Zadání"
+      "description": "Referát -fyz. veličiny (teplota) - zadání v Teams, dobrovolný domácí úkol"
     },
     {
-      "due": "do 13. 9., 10:00"
+      "due": "do 2. 10., 23:59"
+    },
+    {
+      "subject": "Fyzika"
     },
     {
       "teacher": "Jana Nováková"
