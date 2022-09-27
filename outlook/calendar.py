@@ -3,6 +3,7 @@ from outlook.subjects import validsubj
 from datetime import datetime, date, timedelta
 import time
 import json
+import re
 
 import os
 os.system('color')
@@ -18,15 +19,8 @@ def convertdate(due):
     date = datetime.strptime(due, '%d/%m/%y %H:%M')
     return date
 
-def subjFormat(i):
-    if "- 5A8 (" in i:
-        subj = i[i.index("(") + 1 : ]
-        subj = subj.split(")", 1)[0]
-        return subj
-    else:
-        return i
 
-def fetchcalendar():
+def fetchcalendar(hw, i):
     outlook = client.Dispatch('Outlook.Application').GetNamespace('MAPI')
     calendar = outlook.getDefaultFolder(9).Items
 
@@ -42,22 +36,30 @@ def fetchcalendar():
 
     for appointmentItem in calendar:
         if appointmentItem.Subject in validsubj():
-            calendarlist.append(appointmentItem.Body.removesuffix(" \r\n"))
-
+            des = hw.get(i)[0]["description"]
+            if des in appointmentItem.Body:
+                calendarlist.append(des)
     return calendarlist
 
+def body(hw, i):
+    des = hw.get(i)[0]["description"]
+    teacher = hw.get(i)[3]["teacher"]
+    if " (" in i:
+        return f"{des}\r\n\r\nTeacher: {teacher}"
+    else:
+        return f"{i}\r\n{des}\r\n\r\nTeacher: {teacher}"
 
 def create_event():
     with open('homework.json', 'r', encoding='utf-8') as file:
         hw = json.load(file)
         for i in hw:
-            if hw.get(i)[0]["description"] in fetchcalendar():
+            if hw.get(i)[0]["description"] in fetchcalendar(hw, i):
                 print(colored(f"calendar.py:", "cyan"), colored(f"{i} is already synced", "yellow"))
-            elif hw.get(i)[0]["description"] not in fetchcalendar():
+            elif hw.get(i)[0]["description"] not in fetchcalendar(hw, i):
                 outlook = client.Dispatch("Outlook.Application")
                 cal = outlook.CreateItem(1)
-                cal.Subject = subjFormat(i)
-                cal.Body = hw.get(i)[0]["description"]            
+                cal.Subject = hw.get(i)[2]["subject"]
+                cal.Body = body(hw, i)
                 cal.Start = convertdate(hw.get(i)[1]["due"]).strftime("%Y-%m-%d %H:%M")
                 cal.Duration = 45
                 cal.Importance = 2
