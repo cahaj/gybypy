@@ -10,6 +10,10 @@ import json
 import os
 from outlook.subjects import validsubj
 
+def stringToList(string):
+        listRes = list(string.split("\n"))
+        return listRes
+
 os.system('color')
 from termcolor import colored
 
@@ -25,8 +29,6 @@ def login(access1, access2):
     element = driver.find_element(By.ID, "plus4ULoginButton")
     element.click()
 
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'plus4ULoginButton'))).click()
-
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'accessCode1'))).click()
     actions.send_keys(access1).perform()
 
@@ -39,10 +41,6 @@ def login(access1, access2):
     print(colored("scraper.py:", "cyan"), "LOGIN")
 
 def gethw():
-    def stringToList(string):
-        listRes = list(string.split("\n"))
-        return listRes
-
     driver.find_element(By.ID, 'menu-icon').click()
     driver.find_element(By.CLASS_NAME, 'assignments ').click()
     driver.find_element(By.XPATH, '/html/body/div[2]/div/div[5]/ul/li[4]/ul/li[1]/a/span').click()
@@ -87,6 +85,35 @@ def gethw():
         json.dump(hw, file, indent=2, ensure_ascii=False)
 
     print(colored("scraper.py:", "cyan"), "FETCHED HOMEWORK DATA TO homework.json")
+
+def getMarks():
+    driver.find_element(By.ID, 'menu-icon').click()
+    driver.find_element(By.CLASS_NAME, 'evaluation ').click()
+    driver.find_element(By.XPATH, '/html/body/div[2]/div/div[5]/ul/li[3]/ul/li[2]/a/span').click()
+    time.sleep(1)
+    getmarks = driver.find_element(By.XPATH, '//div[@id="shownSelector1"]')
+    marks = stringToList(getmarks.text)
+    marks.remove("Předmět a téma")
+    marks.remove("Hodnocení")
+    marks.remove("Vytvořeno")
+
+    getwage = driver.find_elements(By.XPATH, '//div[@id="shownSelector1"]/..//span[@title]')
+    wage = []
+    for p in range(len(getwage)):
+        if "Váha" in getwage[p].get_attribute('title'):
+            wage.append(getwage[p].get_attribute('title').replace("Váha: ", ""))
+
+    md = {}
+
+    subject = marks[0::7]
+    mark = marks[3::7]
+
+    for count, i in enumerate(subject):
+            if i not in md:
+                md[i] = []
+            md[i].append({mark[count]: wage[count]})
+    
+    return md
 
 def logout():
     driver.find_element(By.ID, "headerAvatarMobile").click()
