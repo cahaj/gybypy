@@ -1,7 +1,10 @@
-import edookit.scraper as scraper
+from edookit.scraper import Scraper
 
 def gradeAverage(access1, access2):
-    scraper.login(access1, access2)
+    print("Loading Chrome webdriver...")
+    scraper = Scraper(access1, access2)
+    print("Loaded!")
+    scraper.login()
     marks = scraper.getMarks()
     scraper.logout()
 
