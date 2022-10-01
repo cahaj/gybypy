@@ -5,6 +5,7 @@ setup(console=[
     'winapp.py',
     'outlook/calendar.py',
     'outlook/subjects.py',
-    'edookit/scraper.py'
+    'edookit/scraper.py',
+    'edookit/gradeaverage.py'
     ]
 )
