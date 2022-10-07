@@ -32,6 +32,8 @@ class Scraper():
 
     def login(self):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, 'plus4ULoginButton'))).click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, 'plus4ULoginButton'))).click()
 
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.NAME, 'accessCode1'))).click()
         self.actions.send_keys(self.access1).perform()
