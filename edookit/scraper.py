@@ -106,6 +106,28 @@ class Scraper():
         marks.remove("Hodnocení")
         marks.remove("Vytvořeno")
 
+        for count, i in enumerate(marks):
+            if "Dnes" in i:
+                del marks[count]
+            elif ".\u2009" in i:
+                del marks[count]
+
+        for count, i in enumerate(marks):
+            if i in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "X"]:
+                try:
+                    if marks[count-6] in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "X"]:
+                        del marks[count-1]
+                        del marks[count-2]
+                    else:
+                        del marks[count-1]
+                except:
+                    try:
+                        if mark[count-3]:
+                            del mark[count-1]
+                            del mark[count-2]
+                    except:
+                        del mark[count-1]
+
         getwage = self.driver.find_elements(By.XPATH, '//div[@id="shownSelector1"]/..//span[@title]')
         wage = []
         for p in range(len(getwage)):
@@ -114,8 +136,8 @@ class Scraper():
 
         md = {}
 
-        subject = marks[0::7]
-        mark = marks[3::7]
+        subject = marks[0::4]
+        mark = marks[1::4]
 
         for count, i in enumerate(subject):
                 if i not in md:
