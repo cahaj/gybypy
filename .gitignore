@@ -1,3 +1,4 @@
 *.pyc
 edookit/local_logins.json
 homework.json
+runbot.py
