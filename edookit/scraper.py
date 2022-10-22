@@ -111,6 +111,8 @@ class Scraper():
                 del marks[count]
             elif ".\u2009" in i:
                 del marks[count]
+            elif "Včera" in i:
+                del marks[count]
 
         for count, i in enumerate(marks):
             if i in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "X"]:
