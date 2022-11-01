@@ -115,36 +115,43 @@ class Scraper():
                 del marks[count]
 
         for count, i in enumerate(marks):
-            if i in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "X"]:
+            if i in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "Nehodnoceno", "X"]:
                 try:
-                    if marks[count-6] in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "X"]:
+                    if marks[count-6] in ["1", "2", "3", "4", "5", "Splnil", "Nesplnil", "Nehodnoceno", "X"]:
                         del marks[count-1]
                         del marks[count-2]
                     else:
                         del marks[count-1]
                 except:
                     try:
-                        if mark[count-3]:
-                            del mark[count-1]
-                            del mark[count-2]
+                        if marks[count-3]:
+                            del marks[count-1]
+                            del marks[count-2]
                     except:
-                        del mark[count-1]
+                        del marks[count-1]
 
         getwage = self.driver.find_elements(By.XPATH, '//div[@id="shownSelector1"]/..//span[@title]')
         wage = []
         for p in range(len(getwage)):
             if "Váha" in getwage[p].get_attribute('title'):
                 wage.append(getwage[p].get_attribute('title').replace("Váha: ", ""))
+            elif "not_evaluated" in getwage[p].get_attribute('class'):
+                wage.append("0")
 
         md = {}
 
         subject = marks[0::4]
         mark = marks[1::4]
 
+        if "Nehodnoceno" in mark:
+            del subject[mark.index("Nehodnoceno")]
+            del mark[mark.index("Nehodnoceno")]
+
         for count, i in enumerate(subject):
-                if i not in md:
-                    md[i] = []
-                md[i].append({mark[count]: wage[count]})
+            if i not in md:
+                md[i] = []
+            md[i].append({mark[count]: wage[count]})
+
         print(colored("scraper.py:", "cyan"), "FETCHED MARKS")
         return md
 
