@@ -65,10 +65,17 @@ async def avrg(ctx: discord.ApplicationContext, access1: str, access2: str):
         r = ga.gradeAverage(access1, access2)
         for i in r:
             for subj, avrg in i.items():
+                split = subj.split()
+                possible = [*split[-1]]
+                try:
+                  int(possible[0])
+                  subj = ' - '.join(subj.split(' - ')[:-1])
+                except:
+                  pass
                 if avrg < 3:
-                    embed.add_field(name=subj.removesuffix('- 5A8'), value=f"```py\n{avrg}```")
+                    embed.add_field(name=subj, value=f"```py\n{avrg}```")
                 else:
-                    embed.add_field(name=subj.removesuffix('- 5A8'), value=f"```fix\n{avrg}```")
+                    embed.add_field(name=subj, value=f"```fix\n{avrg}```")
 
     except Exception as e:
         print(e)
